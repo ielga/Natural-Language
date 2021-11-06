@@ -10,9 +10,7 @@ TRAIN = 2
 
 if len(sys.argv) != 6:
     wrong_args()"""
-
-
-    
+  
 def split (file, vector_labels, vector_questions_answer):
     for line in file:
         vector_labels = vector_labels + [line.split()[0]]
@@ -34,11 +32,17 @@ def Jaccard_Similarity(line1, line2):
     # using length of intersection set divided by length of union set
     return float(len(intersection)) / len(union)
 
+#tranforma a lista em string pois quando fazemos o split ele coloca a linha em lista
+def listToString(s): 
+    str1 = "" 
+    for ele in s: 
+        str1 += ele + ' '
+    return str1 
+
 #Para cada linha do dev vamos encontrar a linha do train com maior jacard
 #vemos qual a label do train correspondente e colocamos essa label no nosso vetor de respostas. 
 #No fim comparamos o vetor de respostas com o nosso vetor e vemos quantas acertamos e quantas falhamos para calcular uma percentagem
 def main():
-    print("ola")
     train_file = open(sys.argv[1], "r")
     dev_file = open(sys.argv[2], "r")
 
@@ -50,24 +54,25 @@ def main():
 
     train_labels,train_questions_answer = split(train_file,train_labels,train_questions_answer)
     dev_right_labels, dev_questions_answer = split(dev_file,dev_right_labels,dev_questions_answer)
-    aux= 0
+    aux= 0 # nao pode ser zero pois sera sempre inferior a zero 
     Line_aux = 0
     i=0
     j=0
-    print(dev_questions_answer)
-    print(train_labels)
+    #print(len(train_labels))
 
-    """for lineDev in dev_questions_answer:
-        print("ola2")
+# fica preso no loop ao comparar o maior resultado
+    for lineDev in dev_questions_answer:
+        line1=listToString(lineDev)
         for lineTrain in train_questions_answer:
-            result = Jaccard_Similarity(lineDev,lineTrain)
+            line2=listToString(lineTrain)
+            result = Jaccard_Similarity(line1,line2)
             if(result > aux):
                 aux = result
                 Line_aux = i
             i = i + 1 
-        dev_model_labels[j] = train_labels[i] 
+        #dev_model_labels[j] = train_labels[i] 
         j = j + 1
-        print(result)"""
+    print(result)
         
         
 #definir label 
