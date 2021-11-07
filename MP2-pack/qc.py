@@ -58,9 +58,10 @@ def main():
     Line_aux = 0
     i=0
     j=0
-    #print(len(train_labels))
-
-# fica preso no loop ao comparar o maior resultado
+ 
+# funciona 
+# verificar os resultados da label se esta coerente
+#demora um pouco
     for lineDev in dev_questions_answer:
         line1=listToString(lineDev)
         for lineTrain in train_questions_answer:
@@ -69,10 +70,24 @@ def main():
             if(result > aux):
                 aux = result
                 Line_aux = i
-            i = i + 1 
-        #dev_model_labels[j] = train_labels[i] 
-        j = j + 1
-    print(result)
+                print(aux)
+        dev_model_labels = dev_model_labels + [train_labels[i] ]
+        print(dev_model_labels)
+        i = i + 1 
+        #j = j + 1
+       
+
+"""#pega na primeira linha do treino e compara com as linhas do dev e devolve a que tem maior jacard similarity 
+#preenche a tabela de respostas com o indice do treino e devolve a label
+#teste a mao
+print(dev_questions_answer[353])
+print(train_questions_answer[0])
+line1=listToString(dev_questions_answer[353])
+line2=listToString(train_questions_answer[0])
+result=Jaccard_Similarity(line1,line2)
+dev_model_labels = dev_model_labels + [train_labels[0]]
+print(result)
+print(dev_model_labels)"""
         
         
 #definir label 
